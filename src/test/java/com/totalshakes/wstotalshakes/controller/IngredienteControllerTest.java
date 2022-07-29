@@ -1,5 +1,6 @@
 package com.totalshakes.wstotalshakes.controller;
 
+import com.totalshakes.wstotalshakes.domain.model.Adicional;
 import com.totalshakes.wstotalshakes.domain.model.Ingrediente;
 import com.totalshakes.wstotalshakes.exception.IngredienteJaCadastrado;
 import com.totalshakes.wstotalshakes.exception.IngredienteNaoEncontrado;
@@ -11,6 +12,7 @@ import org.mockito.junit.jupiter.MockitoSettings;
 import org.springframework.http.HttpStatus;
 
 import java.util.Arrays;
+import java.util.HashSet;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
@@ -28,6 +30,12 @@ class IngredienteControllerTest {
     @BeforeEach
     void setup(){
         ingrediente = Ingrediente.builder().id(1).name("Leite").build();
+
+        var adicionais = new HashSet<Adicional>();
+        var adicional = Adicional.builder().id(1).ingrediente(ingrediente).name("Morango").build();
+        adicionais.add(adicional);
+
+        ingrediente = Ingrediente.builder().id(1).name("Leite").adicionais(adicionais).build();
     }
 
     @Test
@@ -87,7 +95,7 @@ class IngredienteControllerTest {
         //given
         final var ingrediente1 = Ingrediente.builder().id(1).name("Sorvete").build();
         final var ingrediente2 = Ingrediente.builder().id(2).name("Iorgurte").build();
-        final var listIngredient = Arrays.asList(ingrediente1, ingrediente2);
+        final var listIngredient = Arrays.asList(ingrediente1, ingrediente2, ingrediente);
 
         when(service.getAllIngrediente()).thenReturn(listIngredient);
 
@@ -95,9 +103,10 @@ class IngredienteControllerTest {
         var actual = controller.getAllIngrediente();
 
         //then
-        assertThat(listIngredient.size()).isEqualTo(2);
+        assertThat(listIngredient.size()).isEqualTo(3);
         assertThat(listIngredient.get(0)).isEqualTo(ingrediente1);
         assertThat(listIngredient.get(1)).isEqualTo(ingrediente2);
+        assertThat(listIngredient.get(2)).isEqualTo(ingrediente);
         assertThat(actual.getBody()).isEqualTo(listIngredient);
         assertThat(actual.getStatusCode()).isEqualTo(HttpStatus.OK);
     }
