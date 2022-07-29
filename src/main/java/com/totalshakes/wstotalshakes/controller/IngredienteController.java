@@ -32,13 +32,13 @@ public class IngredienteController {
     }
 
     @DeleteMapping(path="/ingrediente/{id}")
-    public ResponseEntity<Void> deleteIngrediente(@PathVariable final int id){
+    public ResponseEntity<Void> deleteIngrediente(@PathVariable final int id) throws IngredienteNaoEncontrado {
         service.deleteIngrediente(id);
         return new ResponseEntity<>(HttpStatus.ACCEPTED);
     }
 
     @GetMapping(path="/ingrediente/{id}")
-    public ResponseEntity<Ingrediente> getIngrediente(@PathVariable final int id){
+    public ResponseEntity<Ingrediente> getIngrediente(@PathVariable final int id) throws IngredienteNaoEncontrado {
         var ingrediente = service.getIngrediente(id);
         return ResponseEntity.ok(ingrediente);
     }

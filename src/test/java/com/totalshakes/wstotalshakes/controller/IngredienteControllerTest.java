@@ -51,7 +51,7 @@ class IngredienteControllerTest {
 
     @Test
     @DisplayName("Deletar ingrediente pelo id no banco de dados")
-    void shouldDeleteIngredient(){
+    void shouldDeleteIngredient() throws IngredienteNaoEncontrado {
         //given
         Ingrediente ingredienteExpected = Ingrediente.builder().id(1).name("Leite").build();
 
@@ -66,7 +66,7 @@ class IngredienteControllerTest {
 
     @Test
     @DisplayName("Consultar ingrediente pelo id no banco de dados")
-    void shouldReturnIngredient(){
+    void shouldReturnIngredient() throws IngredienteNaoEncontrado {
         //given
         Ingrediente ingredienteExpected = Ingrediente.builder().id(1).name("Leite").build();
         when(service.getIngrediente(ingredienteExpected.getId())).thenReturn(ingredienteExpected);

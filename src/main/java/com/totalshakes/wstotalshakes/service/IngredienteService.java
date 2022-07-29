@@ -10,9 +10,9 @@ public interface IngredienteService {
 
     void updateIngrediente(Ingrediente ingrediente) throws IngredienteNaoEncontrado;
 
-    void deleteIngrediente(int id);
+    void deleteIngrediente(int id) throws IngredienteNaoEncontrado;
 
-    Ingrediente getIngrediente(int id);
+    Ingrediente getIngrediente(int id) throws IngredienteNaoEncontrado;
 
     List<Ingrediente> getAllIngrediente();
 }
