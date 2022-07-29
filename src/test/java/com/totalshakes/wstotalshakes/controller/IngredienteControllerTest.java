@@ -1,6 +1,7 @@
 package com.totalshakes.wstotalshakes.controller;
 
 import com.totalshakes.wstotalshakes.domain.model.Ingrediente;
+import com.totalshakes.wstotalshakes.exception.IngredienteJaCadastrado;
 import com.totalshakes.wstotalshakes.exception.IngredienteNaoEncontrado;
 import com.totalshakes.wstotalshakes.service.IngredienteService;
 import org.junit.jupiter.api.*;
@@ -20,21 +21,24 @@ class IngredienteControllerTest {
     @Mock
     IngredienteService service;
 
-    @Mock
-    Ingrediente ingrediente;
-
     @InjectMocks
     IngredienteController controller;
 
+    Ingrediente ingrediente;
+    @BeforeEach
+    void setup(){
+        ingrediente = Ingrediente.builder().id(1).name("Leite").build();
+    }
+
     @Test
     @DisplayName("Salvar ingrediente no banco de dados")
-    void shouldSaveIngredient(){
+    void shouldSaveIngredient() throws IngredienteJaCadastrado {
 
-        var actual = controller.saveIngrediente(ingrediente);
+        var responseEntity = controller.saveIngrediente(ingrediente);
 
         verify(service, times (1)).saveIngrediente(ingrediente);
-        assertThat(actual.getStatusCode()).isEqualTo(HttpStatus.CREATED);
-        assertThat(actual.getBody()).isNull();
+        assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.CREATED);
+        assertThat(responseEntity.getBody()).isNull();
     }
 
     @Test
@@ -53,14 +57,13 @@ class IngredienteControllerTest {
     @DisplayName("Deletar ingrediente pelo id no banco de dados")
     void shouldDeleteIngredient() throws IngredienteNaoEncontrado {
         //given
-        Ingrediente ingredienteExpected = Ingrediente.builder().id(1).name("Leite").build();
 
         //when
-        var actual = controller.deleteIngrediente(ingredienteExpected.getId());
+        var actual = controller.deleteIngrediente(ingrediente.getId());
 
         //then
         assertThat(actual.getStatusCode()).isEqualTo(HttpStatus.ACCEPTED);
-        verify(service, times(1)).deleteIngrediente(ingredienteExpected.getId());
+        verify(service, times(1)).deleteIngrediente(ingrediente.getId());
         assertThat(actual.getBody()).isNull();
     }
 
@@ -68,14 +71,13 @@ class IngredienteControllerTest {
     @DisplayName("Consultar ingrediente pelo id no banco de dados")
     void shouldReturnIngredient() throws IngredienteNaoEncontrado {
         //given
-        Ingrediente ingredienteExpected = Ingrediente.builder().id(1).name("Leite").build();
-        when(service.getIngrediente(ingredienteExpected.getId())).thenReturn(ingredienteExpected);
+        when(service.getIngrediente(ingrediente.getId())).thenReturn(ingrediente);
 
         //when
-        var actual = controller.getIngrediente(ingredienteExpected.getId());
+        var actual = controller.getIngrediente(ingrediente.getId());
 
         //then
-        assertThat(actual.getBody()).isEqualTo(ingredienteExpected);
+        assertThat(actual.getBody()).isEqualTo(ingrediente);
         assertThat(actual.getStatusCode()).isEqualTo(HttpStatus.OK);
     }
 
@@ -85,18 +87,18 @@ class IngredienteControllerTest {
         //given
         final var ingrediente1 = Ingrediente.builder().id(1).name("Sorvete").build();
         final var ingrediente2 = Ingrediente.builder().id(2).name("Iorgurte").build();
-        final var ingredienteExpected = Arrays.asList(ingrediente1, ingrediente2);
+        final var listIngredient = Arrays.asList(ingrediente1, ingrediente2);
 
-        when(service.getAllIngrediente()).thenReturn(ingredienteExpected);
+        when(service.getAllIngrediente()).thenReturn(listIngredient);
 
         //when
         var actual = controller.getAllIngrediente();
 
         //then
-        assertThat(ingredienteExpected.size()).isEqualTo(2);
-        assertThat(ingredienteExpected.get(0)).isEqualTo(ingrediente1);
-        assertThat(ingredienteExpected.get(1)).isEqualTo(ingrediente2);
-        assertThat(actual.getBody()).isEqualTo(ingredienteExpected);
+        assertThat(listIngredient.size()).isEqualTo(2);
+        assertThat(listIngredient.get(0)).isEqualTo(ingrediente1);
+        assertThat(listIngredient.get(1)).isEqualTo(ingrediente2);
+        assertThat(actual.getBody()).isEqualTo(listIngredient);
         assertThat(actual.getStatusCode()).isEqualTo(HttpStatus.OK);
     }
 }
