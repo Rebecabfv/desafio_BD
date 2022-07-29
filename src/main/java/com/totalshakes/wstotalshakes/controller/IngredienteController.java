@@ -19,8 +19,7 @@ public class IngredienteController {
     final IngredienteService service;
 
     @PostMapping(path="/ingrediente")
-    public ResponseEntity<Void> saveIngrediente(@RequestBody final Ingrediente ingrediente) {
-
+    public ResponseEntity<Void> saveIngrediente(@RequestBody final Ingrediente ingrediente) throws IngredienteJaCadastrado {
         service.saveIngrediente(ingrediente);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }

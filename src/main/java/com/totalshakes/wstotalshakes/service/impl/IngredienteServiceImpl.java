@@ -2,6 +2,7 @@ package com.totalshakes.wstotalshakes.service.impl;
 
 import com.totalshakes.wstotalshakes.domain.model.Ingrediente;
 import com.totalshakes.wstotalshakes.domain.repository.IngredienteRepository;
+import com.totalshakes.wstotalshakes.exception.IngredienteJaCadastrado;
 import com.totalshakes.wstotalshakes.exception.IngredienteNaoEncontrado;
 import com.totalshakes.wstotalshakes.service.IngredienteService;
 import lombok.RequiredArgsConstructor;
@@ -16,7 +17,10 @@ public class IngredienteServiceImpl implements IngredienteService {
     private final IngredienteRepository repository;
 
     @Override
-    public void saveIngrediente(Ingrediente ingrediente) {
+    public void saveIngrediente(Ingrediente ingrediente) throws IngredienteJaCadastrado {
+        var ingredienteExiste = repository.findById(ingrediente.getId());
+        if (ingredienteExiste.isPresent())
+            throw new IngredienteJaCadastrado();
         repository.save(ingrediente);
     }
 
