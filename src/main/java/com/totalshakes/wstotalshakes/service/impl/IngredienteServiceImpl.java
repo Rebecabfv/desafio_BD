@@ -6,12 +6,15 @@ import com.totalshakes.wstotalshakes.exception.IngredienteNaoEncontrado;
 import com.totalshakes.wstotalshakes.service.IngredienteService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @RequiredArgsConstructor
 @Service
 public class IngredienteServiceImpl implements IngredienteService {
 
-    final IngredienteRepository repository;
+    private final IngredienteRepository repository;
 
     @Override
     public void saveIngrediente(Ingrediente ingrediente) {
@@ -21,7 +24,7 @@ public class IngredienteServiceImpl implements IngredienteService {
     @Override
     public void updateIngrediente(Ingrediente ingrediente) throws IngredienteNaoEncontrado {
         var ingredienteExiste = repository.findById(ingrediente.getId());
-        if (!ingredienteExiste.isPresent())
+        if (ingredienteExiste.isEmpty())
             throw new IngredienteNaoEncontrado();
         repository.save(ingrediente);
     }
@@ -37,5 +40,10 @@ public class IngredienteServiceImpl implements IngredienteService {
     public Ingrediente getIngrediente(int id) {
         //TODO: create conditions for throws
         return repository.findById(id).get();
+    }
+
+    @Override
+    public List<Ingrediente> getAllIngrediente() {
+        return (List<Ingrediente>) repository.findAll();
     }
 }

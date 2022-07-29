@@ -3,6 +3,8 @@ package com.totalshakes.wstotalshakes.service;
 import com.totalshakes.wstotalshakes.domain.model.Ingrediente;
 import com.totalshakes.wstotalshakes.exception.IngredienteNaoEncontrado;
 
+import java.util.List;
+
 public interface IngredienteService {
     void saveIngrediente(Ingrediente ingrediente);
 
@@ -11,4 +13,6 @@ public interface IngredienteService {
     void deleteIngrediente(int id);
 
     Ingrediente getIngrediente(int id);
+
+    List<Ingrediente> getAllIngrediente();
 }
