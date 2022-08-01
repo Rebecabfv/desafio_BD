@@ -13,35 +13,36 @@ import java.util.List;
 
 @RequiredArgsConstructor
 @RestController
+@RequestMapping("/api/ingrediente")
 public class IngredienteController {
 
     final IngredienteService service;
 
-    @PostMapping(path="/ingrediente")
+    @PostMapping(produces = "application/json")
     public ResponseEntity<Void> saveIngrediente(@RequestBody final Ingrediente ingrediente) throws IngredienteJaCadastrado {
         service.saveIngrediente(ingrediente);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
-    @PutMapping(path="/ingrediente")
+    @PutMapping(produces = "application/json")
     public ResponseEntity<Void> updateIngrediente(@RequestBody final Ingrediente ingrediente) throws IngredienteNaoEncontrado {
         service.updateIngrediente(ingrediente);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @DeleteMapping(path="/ingrediente/{id}")
+    @DeleteMapping(path="/{id}", produces = "application/json")
     public ResponseEntity<Void> deleteIngrediente(@PathVariable final int id) throws IngredienteNaoEncontrado {
         service.deleteIngrediente(id);
         return new ResponseEntity<>(HttpStatus.ACCEPTED);
     }
 
-    @GetMapping(path="/ingrediente/{id}")
+    @GetMapping(path="/{id}", produces = "application/json")
     public ResponseEntity<Ingrediente> getIngrediente(@PathVariable final int id) throws IngredienteNaoEncontrado {
         var ingrediente = service.getIngrediente(id);
         return ResponseEntity.ok(ingrediente);
     }
 
-    @GetMapping(path = "/ingrediente/all")
+    @GetMapping(path="/all", produces = "application/json")
     public ResponseEntity<List<Ingrediente>> getAllIngrediente(){
         var listIngrediente = service.getAllIngrediente();
         return ResponseEntity.ok(listIngrediente);
