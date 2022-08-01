@@ -1,6 +1,5 @@
 package com.totalshakes.wstotalshakes.controller;
 
-import com.totalshakes.wstotalshakes.domain.model.Adicional;
 import com.totalshakes.wstotalshakes.domain.model.Ingrediente;
 import com.totalshakes.wstotalshakes.exception.IngredienteJaCadastrado;
 import com.totalshakes.wstotalshakes.exception.IngredienteNaoEncontrado;
@@ -12,7 +11,6 @@ import org.mockito.junit.jupiter.MockitoSettings;
 import org.springframework.http.HttpStatus;
 
 import java.util.Arrays;
-import java.util.HashSet;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
@@ -27,15 +25,10 @@ class IngredienteControllerTest {
     IngredienteController controller;
 
     Ingrediente ingrediente;
+
     @BeforeEach
     void setup(){
         ingrediente = Ingrediente.builder().id(1).name("Leite").build();
-
-        var adicionais = new HashSet<Adicional>();
-        var adicional = Adicional.builder().id(1).ingrediente(ingrediente).name("Morango").build();
-        adicionais.add(adicional);
-
-        ingrediente = Ingrediente.builder().id(1).name("Leite").adicionais(adicionais).build();
     }
 
     @Test

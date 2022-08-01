@@ -5,7 +5,6 @@ import javax.persistence.*;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import java.io.Serializable;
-import java.util.Set;
 
 @Data
 @Builder
@@ -23,7 +22,4 @@ public class Ingrediente implements Serializable {
     private int id;
     
     private String name;
-
-    @OneToMany (mappedBy = "ingrediente", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private Set<Adicional> adicionais;
 }
