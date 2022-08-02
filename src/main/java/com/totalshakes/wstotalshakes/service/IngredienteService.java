@@ -7,7 +7,7 @@ import com.totalshakes.wstotalshakes.exception.IngredienteNaoEncontrado;
 import java.util.List;
 
 public interface IngredienteService {
-    void saveIngrediente(Ingrediente ingrediente) throws IngredienteJaCadastrado;
+    Ingrediente saveIngrediente(Ingrediente ingrediente) throws IngredienteJaCadastrado;
 
     void updateIngrediente(Ingrediente ingrediente) throws IngredienteNaoEncontrado;
 

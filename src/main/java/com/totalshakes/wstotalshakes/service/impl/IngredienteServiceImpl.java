@@ -17,11 +17,11 @@ public class IngredienteServiceImpl implements IngredienteService {
     private final IngredienteRepository repository;
 
     @Override
-    public void saveIngrediente(Ingrediente ingrediente) throws IngredienteJaCadastrado {
+    public Ingrediente saveIngrediente(Ingrediente ingrediente) throws IngredienteJaCadastrado {
         var ingredienteExiste = repository.findById(ingrediente.getId());
         if (ingredienteExiste.isPresent())
             throw new IngredienteJaCadastrado();
-        repository.save(ingrediente);
+        return repository.save(ingrediente);
     }
 
     @Override
@@ -42,7 +42,7 @@ public class IngredienteServiceImpl implements IngredienteService {
 
     @Override
     public List<Ingrediente> getAllIngrediente() {
-        return (List<Ingrediente>) repository.findAll();
+        return repository.findAll();
     }
 
     private Ingrediente getIngredienteById(int id) throws IngredienteNaoEncontrado {

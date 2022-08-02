@@ -8,7 +8,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import javax.validation.Valid;
+import java.net.URI;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -19,9 +22,14 @@ public class IngredienteController {
     final IngredienteService service;
 
     @PostMapping(produces = "application/json")
-    public ResponseEntity<Void> saveIngrediente(@RequestBody final Ingrediente ingrediente) throws IngredienteJaCadastrado {
-        service.saveIngrediente(ingrediente);
-        return new ResponseEntity<>(HttpStatus.CREATED);
+    public ResponseEntity<Ingrediente> saveIngrediente(@Valid @RequestBody final Ingrediente ingrediente) throws IngredienteJaCadastrado {
+        var ingredienteSalvo = service.saveIngrediente(ingrediente);
+
+        URI location = ServletUriComponentsBuilder
+                                .fromCurrentRequest()
+                                .path("/{id}")
+                                .buildAndExpand(ingredienteSalvo.getId()).toUri();
+        return ResponseEntity.created(location).build();
     }
 
     @PutMapping(produces = "application/json")
