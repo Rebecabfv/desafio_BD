@@ -26,14 +26,9 @@ public class IngredienteController {
     final AdicionalService serviceAdicional;
 
     @PostMapping(produces = "application/json")
-    public ResponseEntity<Ingrediente> saveIngrediente(@Valid @RequestBody final Ingrediente ingrediente) throws IngredienteJaCadastrado {
-        var ingredienteSalvo = serviceIngrediente.saveIngrediente(ingrediente);
-
-        URI location = ServletUriComponentsBuilder
-                                .fromCurrentRequest()
-                                .path("/{id}")
-                                .buildAndExpand(ingredienteSalvo.getId()).toUri();
-        return ResponseEntity.created(location).build();
+    public ResponseEntity<Void> saveIngrediente(@Valid @RequestBody final Ingrediente ingrediente) throws IngredienteJaCadastrado {
+         serviceIngrediente.saveIngrediente(ingrediente);
+        return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
     @PutMapping(produces = "application/json")
