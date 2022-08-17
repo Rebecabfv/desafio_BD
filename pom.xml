@@ -114,10 +114,10 @@
 			    <version>2.6.0</version>
 			    <configuration>
 				<from>
-				    <image>openjdk:11-jdk-slim-buster</image>
+				    <image>openjdk@sha256:fb54ed3516242995d86c53346463a3509f9baf74a9178c066bdbcc5c1bdafc66</image>
 				</from>
 				<to>
-				    <image>rebsviana:${project.version}</image>
+				    <image>rebsviana/${project.groupId}/${project.artifactId}:${project.version}</image>
 				    <auth>
 					<username>
 					    ${env.DOCKERHUB_USERNAME}
@@ -132,7 +132,7 @@
 					<jvmFlag>-Xms256m</jvmFlag>
 					<jvmFlag>-Xmx512m</jvmFlag>
 				    </jvmFlags>
-				    <mainClass>io.github.rebsviana.desafio_BD</mainClass>
+				    <mainClass>io.github.rebecabfv.desafio_BD</mainClass>
 				</container>
 			    </configuration>
 			</plugin>
