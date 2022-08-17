@@ -117,7 +117,7 @@
 				    <image>openjdk:11-jdk-slim-buster</image>
 				</from>
 				<to>
-				    <image>rebsviana/blog:${project.version}</image>
+				    <image>rebsviana:${project.version}</image>
 				    <auth>
 					<username>
 					    ${env.DOCKERHUB_USERNAME}
