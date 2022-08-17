@@ -31,6 +31,7 @@ jobs:
       - name: Set up JDK 11
         uses: actions/setup-java@v3
         with:
+          distribution: 'temurin'
           java-version: 11
       - name: Run unit tests
         run: mvn -B test
@@ -44,6 +45,7 @@ jobs:
       - name: Set up JDK 11
         uses: actions/setup-java@v3
         with:
+          distribution: 'temurin'
           java-version: 11
       - name: Integrate with sonarcloud
         run: mvn -B org.jacoco:jacoco-maven-plugin:prepare-agent verify sonar:sonar -Dsonar.coverage.jacoco.xmlReportPaths=target/site/jacoco/jacoco.xml -Dsonar.projectKey=gasparbarancelli_blog -Dsonar.organization=gasparbarancelli -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=${{secrets.SONARCLOUD_TOKEN}}
@@ -59,6 +61,7 @@ jobs:
     - name: Set up JDK 11
       uses: actions/setup-java@v3
       with:
+        distribution: 'temurin'
         java-version: 11
     - name: Build Project, create docker image and send image to dockerhub
       env:
