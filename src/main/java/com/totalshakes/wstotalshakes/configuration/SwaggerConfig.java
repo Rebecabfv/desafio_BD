@@ -29,8 +29,6 @@ public class SwaggerConfig {
                 .paths(PathSelectors.any())
                 .build()
                 .apiInfo(apiInfo());
-//                .useDefaultResponseMessages(false)
-//                .globalResponseMessage(RequestMethod.GET, responseMessageForGET());
     }
 
     private ApiInfo apiInfo() {
@@ -42,20 +40,5 @@ public class SwaggerConfig {
                 .licenseUrl("https://www.apache.org/licenses/LICENSE-2.0")
                 .contact(new Contact("Rebeca", "", "re.bfviana@gmail.com.br"))
                 .build();
-    }
-
-    private List<ResponseMessage> responseMessageForGET()
-    {
-        return new ArrayList<ResponseMessage>() {{
-            add(new ResponseMessageBuilder()
-                    .code(500)
-                    .message("500 message")
-                    .responseModel(new ModelRef("Error"))
-                    .build());
-            add(new ResponseMessageBuilder()
-                    .code(403)
-                    .message("Forbidden!")
-                    .build());
-        }};
     }
 }
