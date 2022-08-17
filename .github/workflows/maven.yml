@@ -19,14 +19,9 @@ jobs:
         with:
           distribution: 'temurin'
           java-version: '11'
-      - name: Cache Maven packages
-        uses: actions/cache@v3
-        with:
-          path: ~/.m2
-          key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
-          restore-keys: ${{ runner.os }}-m2
-      - name: Run tests with Maven
-        run: mvn -B test --file pom.xml
+      - name: Complite code
+        run: mvn -B compile
+        
   test:
     runs-on: ubuntu-latest
     name: Tests
